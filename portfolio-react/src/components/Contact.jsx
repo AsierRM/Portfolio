@@ -1,11 +1,14 @@
-import {FaEnvelope, FaGithub} from 'react-icons/fa'
+import { FaEnvelope, FaGithub } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 function Contact() {
+  const { t } = useTranslation()
+
   return (
     <div className='contact-container'>
       <div className='contact-text'>
-        <h2>Contacto</h2>
-        <p>Si quieres ponerte en contacto conmigo puedes mandarme un correo o encontrarme en github</p>
+        <h2>{t('contact.title')}</h2>
+        <p>{t('contact.text')}</p>
       </div>
 
       <div className='contact-links'>
@@ -20,7 +23,7 @@ function Contact() {
         </a>
       </div>
     </div>
-    
+
   )
 }
 

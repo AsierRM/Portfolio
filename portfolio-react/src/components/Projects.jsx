@@ -1,43 +1,67 @@
 import { useEffect, useState } from 'react'
+import ProjectModal from './ProjectModal'
+import { useTranslation } from 'react-i18next'
 
 function Projects() {
   const [projects, setProjects] = useState([])
 
-  useEffect( () => {
+  useEffect(() => {
     fetch('https://api.github.com/users/AsierRM/repos')
-    .then((response) => response.json())
-    .then((data) => {
-      if (Array.isArray(data)) {
-        const selectedRepos = ['Tamagotchi', 'abdPrueba2', 'PrimerProyecto']
-      
-      
-      const filteredProjects = data.filter((repo) => selectedRepos.includes(repo.name))
-     
-    
-      setProjects(filteredProjects)
-     }
-    })
-    .catch((error) => console.error('Error al cargar proyectos:', error))
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const selectedRepos = ['Tamagotchi-master', 'Proyecto-Administracion-Base-De-Datos', 'Portfolio']
+          const filteredProjects = data.filter((repo) => selectedRepos.includes(repo.name))
+          setProjects(filteredProjects)
+        }
+      })
+      .catch((error) => console.error('Error al cargar proyectos:', error))
   }, [])
-  
+
+  //filtros
+  const [selectedTech, setSelectedTech] = useState('All')
+  const technologies = ['All', ...new Set(projects.map(p => p.language).filter(Boolean))]
+  const filteredProjects = selectedTech === 'All' ? projects : projects.filter(p => p.language === selectedTech)
+
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  //Traductor
+  const { t } = useTranslation()
   return (
     <div className="projects-container">
-      <h2>Mis proyectos</h2>
+      <h2>{t('projects.title')}</h2>
       <p className="projects-subtitle">
-        Estos son algunos de mis repositorios y proyectos más destacados.
+        {t('projects.subtitle')}
       </p>
 
+      <div className="filter-buttons">
+        {technologies.map((tech) => (
+          <button
+            key={tech}
+            className={selectedTech === tech ? 'active' : ''}
+            onClick={() => setSelectedTech(tech)}
+          >
+            {tech}
+          </button>
+        ))}
+      </div>
+
       <div className="projects-grid">
-        {projects.map((project) => (
-          <div key={project.id} className="project-card">
+
+        {filteredProjects.map((project) => (
+          <div
+            key={project.id}
+            className="project-card"
+            onClick={() => setSelectedProject(project)}
+          >
             <h3>{project.name}</h3>
 
             <p className="project-description">
-              {project.description || 'Sin descripción disponible'}
+              {project.description || `{t('projects.noDescription')}`}
             </p>
 
             <div className="project-info">
-              <span>{project.language || 'Sin lenguaje principal'}</span>
+              <span>{project.language || `{t('projects.noLanguage')}`}</span>
               <span>★ {project.stargazers_count}</span>
             </div>
 
@@ -47,11 +71,17 @@ function Projects() {
               rel="noopener noreferrer"
               className="project-button"
             >
-              Ver repositorio
+              {t('projects.viewRepo')}
             </a>
           </div>
         ))}
       </div>
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </div>
   )
 }

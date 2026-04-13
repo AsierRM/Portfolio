@@ -1,33 +1,35 @@
+import { useTranslation } from 'react-i18next'
+
 function Hero() {
+  const { t } = useTranslation()
+
   return (
     <div className="hero-container">
       <div className="hero-text">
-        <p className="hero-role">Ingeniero Informático · Desarrollador Full Stack</p>
+        <p className="hero-role">{t('hero.role')}</p>
 
         <h1>
-          Hola, soy <span>Asier Rodriguez</span>
+          {t('hero.title')}
         </h1>
 
         <p className="hero-description">
-          Me apasiona crear aplicaciones web modernas, intuitivas y eficientes.
-          Disfruto trabajando tanto en frontend como en backend y siempre estoy
-          buscando aprender nuevas tecnologías.
+          {t('hero.description')}
         </p>
 
         <div className="hero-buttons">
           <a href="#projects" className="primary-btn">
-            Ver proyectos
+            {t('hero.projects')}
           </a>
 
           <a href="#contact" className="secondary-btn">
-            Contactar
+            {t('hero.contact')}
           </a>
         </div>
       </div>
 
       <div className="hero-image">
-        <img
-          src="https://i.pinimg.com/736x/0b/6c/44/0b6c44a2bb3e369362c57911c66fbcc9.jpg"
+        <img 
+          src='/images/profile.jpg'
           alt="Asier Rodriguez"
         />
       </div>

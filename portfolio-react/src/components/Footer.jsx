@@ -1,7 +1,12 @@
+import { useTranslation } from 'react-i18next'
+
 function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="footer">
-      <p>© 2026 Portfolio. Todos los derechos reservados.</p>
+      <p>{t('footer.text')}</p>
+      <p>{t('footer.madeWith')}</p>
     </footer>
   )
 }

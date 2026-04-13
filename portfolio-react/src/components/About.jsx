@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next'
+
 function About() {
+  const { t } = useTranslation()
+
   return (
     <div className="about-container">
       <div className="about-image">
@@ -9,18 +13,12 @@ function About() {
       </div>
 
       <div className="about-text">
-        <h2>Sobre mí</h2>
+        <h2>{t('about.title')}</h2>
+
+        <p>{t('about.description')}</p>
 
         <p>
-          Soy Asier Rodriguez, graduado en Ingeniería Informática y especializado
-          en desarrollo web. Me considero una persona curiosa, organizada y con
-          muchas ganas de seguir creciendo profesionalmente.
-        </p>
-
-        <p>
-          Tengo interés por el desarrollo frontend, el diseño de interfaces y
-          la creación de experiencias de usuario intuitivas. También disfruto
-          trabajando con bases de datos y APIs.
+          {t('about.interests')}
         </p>
 
         <div className="skills-container">
@@ -35,7 +33,7 @@ function About() {
           </div>
 
           <div className="skill-card">
-            <h3>Herramientas</h3>
+            <h3>{t('about.tools')}</h3>
             <p>Git, GitHub, Figma, VS Code</p>
           </div>
         </div>
